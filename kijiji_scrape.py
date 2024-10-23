@@ -14,29 +14,34 @@ response = requests.get(url, headers=headers)
 soup = BeautifulSoup(response.content, 'html.parser')
 
 # Finding the listings on the page
-listings = soup.find_all('li', {'data-testid': lambda value: value and value.startswith('listing-card-list-item')})
+listings = soup.find_all('li', {
+                         'data-testid': lambda value: value and value.startswith('listing-card-list-item')})
 
 # Looping through listings and extract data
 for listing in listings:
     try:
         # Listing ID
-        listing_id = listing.find('section', {'data-testid': 'listing-card'})['data-listingid']
-        
+        listing_id = listing.find(
+            'section', {'data-testid': 'listing-card'})['data-listingid']
+
         # Title
         title = listing.find('a', {'data-testid': 'listing-link'}).text.strip()
-        
+
         # Price
-        price = listing.find('p', {'data-testid': 'listing-price'}).text.strip()
-        
+        price = listing.find(
+            'p', {'data-testid': 'listing-price'}).text.strip()
+
         # Location
-        location = listing.find('p', {'data-testid': 'listing-location'}).text.strip()
-        
+        location = listing.find(
+            'p', {'data-testid': 'listing-location'}).text.strip()
+
         # Link
         link = listing.find('a', {'data-testid': 'listing-link'})['href']
-        full_link = f"https://www.kijiji.ca{link}"
-        
+        full_link = f"{link}"
+
         # Description
-        description = listing.find('p', {'data-testid': 'listing-description'}).text.strip()
+        description = listing.find(
+            'p', {'data-testid': 'listing-description'}).text.strip()
 
         # Output the extracted data
         print(f"Listing ID: {listing_id}")
