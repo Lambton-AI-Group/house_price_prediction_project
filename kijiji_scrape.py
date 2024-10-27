@@ -17,6 +17,7 @@ soup = BeautifulSoup(response.content, 'html.parser')
 listings = soup.find_all('li', {
                          'data-testid': lambda value: value and value.startswith('listing-card-list-item')})
 
+
 # Looping through listings and extract data
 for listing in listings:
     try:
