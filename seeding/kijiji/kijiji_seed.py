@@ -23,4 +23,3 @@ data_dict = data.to_dict("records")
 # Insert cleaned data into MongoDB
 collection.insert_many(data_dict)
 print("Data with cleaned 'Price' has been successfully stored in MongoDB.")
-
