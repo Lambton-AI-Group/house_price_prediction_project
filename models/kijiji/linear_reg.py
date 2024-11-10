@@ -80,6 +80,7 @@ print(f'Root Mean Squared Error (RMSE): {rmse}')
 # plt.show()
 
 # Step 11: Save the Model and Label Encoder
+joblib.dump(X.columns, 'trained_columns.pkl')
 joblib.dump(model, 'house_price_model.pkl')
 joblib.dump(label_encoder, 'location_label_encoder.pkl')
 print("Model and label encoder saved.")
