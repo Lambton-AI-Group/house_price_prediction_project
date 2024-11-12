@@ -1,0 +1,28 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up SSH key
+        env:
+          EC2_PEM_KEY_BASE64: ${{ secrets.EC2_PEM_KEY_BASE64 }}
+        run: |
+          echo "$EC2_PEM_KEY_BASE64" | base64 -d > ec2_key.pem
+          chmod 400 ec2_key.pem
+
+      - name: SSH into EC2 and Pull Latest Code
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ec2_key.pem ubuntu@ec2-18-191-204-126.us-east-2.compute.amazonaws.com "
+            cd /home/ubuntu/airflow/Housing\ Prices\ Project &&
+            git pull origin main &&
+          "
+
+      - name: Clean up
+        run: rm ec2_key.pem
