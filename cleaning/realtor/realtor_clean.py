@@ -30,3 +30,14 @@ df['price'] = df['price'].apply(clean_price)
 df['bed'] = pd.to_numeric(df['bed'], errors='coerce').fillna(0).astype(int)
 df['bath'] = pd.to_numeric(df['bath'].replace('+', ''), errors='coerce').fillna(0).astype(int)
 df['size-sqft'] = df['size-sqft'].apply(lambda x: int(x.replace(',', '').strip()) if isinstance(x, str) else x)
+
+# Drop any extra MongoDB-specific columns, if present (like '_id')
+df = df.loc[:, ~df.columns.str.startswith('_')]
+
+# Define a writable file path (e.g., Desktop)
+file_path = "/C:/Users/ashwa/OneDrive/Desktop/cleaned_realtor_data.csv"
+
+# Save the cleaned data to a new CSV file
+df.to_csv(file_path, index=False)
+
+print("Data fetched, cleaned, and saved to 'cleaned_realtor_data.csv' on the Desktop successfully!")
