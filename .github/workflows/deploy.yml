@@ -21,7 +21,8 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -i ec2_key.pem ubuntu@ec2-18-191-204-126.us-east-2.compute.amazonaws.com "
             cd /home/ubuntu/airflow/house_price_prediction_project &&
-            git pull origin main
+            git fetch origin main &&
+            git reset --hard origin/main
           "
 
       - name: Clean up
